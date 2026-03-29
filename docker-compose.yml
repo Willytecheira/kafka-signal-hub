@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  signals-app:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - KAFKA_BROKERS=${KAFKA_BROKERS:-localhost:9092}
+      - KAFKA_TOPIC=${KAFKA_TOPIC:-bridgewise.alerts.normalized}
+      - KAFKA_GROUP_ID=${KAFKA_GROUP_ID:-lovable-signals-app}
+      - PORT=3000
+    restart: unless-stopped
+    # Si Kafka corre en Docker, descomenta:
+    # network_mode: host
